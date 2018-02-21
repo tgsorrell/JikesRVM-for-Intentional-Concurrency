@@ -1,0 +1,22 @@
+import java.util.*;
+
+
+public class AssemblerTest{
+  
+  private String name;
+  
+  public AssemblerTest(){
+    name = "Assembler Test";
+  }
+  
+  public getName()
+  {
+    return test;
+  }
+  
+  public static void main(String args[]){
+    AssemblerTest at = new AssemblerTest();
+    at.getName();
+    System.out.println("DONE");
+  }
+}
