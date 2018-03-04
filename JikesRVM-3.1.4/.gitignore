@@ -22,7 +22,7 @@ jikesrvm.iml
 /testing/tests/javalex/qb1.*.lex.java
 
 # Directories generated during build
-/components/
+
 /dist/
 /generated/
 /results/

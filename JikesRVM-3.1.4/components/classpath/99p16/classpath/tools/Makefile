@@ -99,8 +99,8 @@ target_triplet = i686-pc-linux-gnu
 #	gtnameserv$(EXEEXT) gorbd$(EXEEXT) \
 #	grmid$(EXEEXT) grmic$(EXEEXT) \
 #	$(am__EXEEXT_1)
-##am__append_1 = gjdoc
-#am__append_2 = gjdoc
+#am__append_1 = gjdoc
+am__append_2 = gjdoc
 subdir = tools
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_prog_antlr.m4 \
@@ -126,8 +126,8 @@ CONFIG_CLEAN_FILES = gappletviewer gjarsigner gkeytool gjar \
 	gnative2ascii gserialver grmiregistry gtnameserv gorbd grmid \
 	grmic gjavah gjdoc
 CONFIG_CLEAN_VPATH_FILES =
-##am__EXEEXT_1 =  \
-##	gjdoc$(EXEEXT)
+#am__EXEEXT_1 =  \
+#	gjdoc$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(TOOLSdir)"
 PROGRAMS = $(bin_PROGRAMS)
@@ -344,8 +344,8 @@ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = ${SHELL} /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-ANTLR = 
-ANTLR_JAR = 
+ANTLR = runantlr
+ANTLR_JAR = /usr/share/java/antlr.jar
 AR = ar
 AUTOCONF = ${SHELL} /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath/missing autoconf
 AUTOHEADER = ${SHELL} /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath/missing autoheader
@@ -353,20 +353,20 @@ AUTOMAKE = ${SHELL} /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/clas
 AWK = gawk
 CAIRO_CFLAGS = -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12
 CAIRO_LIBS = -lcairo
-CC = /usr/bin/gcc -w -pipe -ggdb3 -O -fPIC -DRVM_FOR_SSE2 -mfpmath=sse
+CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = 
+CFLAGS = -g -O2
 CLASSPATH_CONVENIENCE = -no-undefined
 CLASSPATH_INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/native/jni/classpath -I$(top_srcdir)/native/jni/native-lib
 CLASSPATH_MODULE = -module -version-info 0:0:0 -no-undefined
 COLLECTIONS_PREFIX = 
 CP = /bin/cp
-CPP = /usr/bin/gcc -w -pipe -ggdb3 -O -fPIC -DRVM_FOR_SSE2 -mfpmath=sse -E
+CPP = gcc -E
 CPPFLAGS = 
-CXX = ${c++.exe} ${c++.args}
-CXXCPP = /lib/cpp
-CXXDEPMODE = depmode=none
-CXXFLAGS = 
+CXX = g++
+CXXCPP = g++ -E
+CXXDEPMODE = depmode=gcc3
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DATE = /bin/date
 DEFAULT_PREFS_PEER = gnu.java.util.prefs.GConfBasedFactory
@@ -380,18 +380,18 @@ ECHO_N = -n
 ECHO_T = 
 ECJ_JAR = 
 EGREP = /bin/grep -E
-ERROR_CFLAGS = -Werror
-EXAMPLESDIR = 
+ERROR_CFLAGS = 
+EXAMPLESDIR = examples
 EXEEXT = 
 EXTRA_CFLAGS = -fexceptions -fasynchronous-unwind-tables
 FGREP = /bin/grep -F
 FIND = /usr/bin/find
 FREETYPE2_CFLAGS = -I/usr/include/freetype2
 FREETYPE2_LIBS = -lfreetype
-GCONF_CFLAGS = 
-GCONF_LIBS = 
-GDK_CFLAGS = 
-GDK_LIBS = 
+GCONF_CFLAGS = -pthread -I/usr/include/gconf/2 -I/usr/include/dbus-1.0 -I/usr/lib/i386-linux-gnu/dbus-1.0/include -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include
+GCONF_LIBS = -lgconf-2 -lglib-2.0
+GDK_CFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/i386-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include
+GDK_LIBS = -lgdk-x11-2.0 -lpangocairo-1.0 -lpango-1.0 -lcairo -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0
 GJDOC = 
 GLIB_CFLAGS = 
 GLIB_LIBS = 
@@ -495,10 +495,10 @@ abs_builddir = /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath
 abs_srcdir = /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath/tools
 abs_top_builddir = /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath
 abs_top_srcdir = /home/tgs1003/JikesRVM-3.1.4/components/classpath/99p16/classpath
-ac_ct_ANTLR = 
+ac_ct_ANTLR = runantlr
 ac_ct_AR = ar
-ac_ct_CC = /usr/bin/gcc -w -pipe -ggdb3 -O -fPIC -DRVM_FOR_SSE2 -mfpmath=sse
-ac_ct_CXX = 
+ac_ct_CC = gcc
+ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -555,9 +555,9 @@ top_builddir = ..
 top_srcdir = ..
 uudecode = 
 vm_classes = ${top_srcdir}/vm/reference
-##gjdoc_gendir = ${top_srcdir}/tools/generated
-#gjdoc_gendir = ${top_builddir}/tools/generated
-#ANTLR_CLASSPATH = $(ANTLR_JAR):$(gjdoc_gendir)
+#gjdoc_gendir = ${top_srcdir}/tools/generated
+gjdoc_gendir = ${top_builddir}/tools/generated
+ANTLR_CLASSPATH = $(ANTLR_JAR):$(gjdoc_gendir)
 GLIBJ_BOOTCLASSPATH = '$(top_builddir)/lib/glibj.zip:$(top_builddir)/lib'
 GLIBJ_CLASSPATH = asm:$(ANTLR_CLASSPATH)
 JCOMPILER = $(JAVAC) $(JAVACFLAGS) -source 1.5 -target 1.5 -encoding UTF-8 -bootclasspath $(GLIBJ_BOOTCLASSPATH) -classpath $(GLIBJ_CLASSPATH)
@@ -781,12 +781,12 @@ gjdoc_resources = $(gnu_classpath_tools_gjdoc_jar_CSS) $(gnu_classpath_tools_gjd
 	$(gnu_classpath_tools_gjdoc_jar_RNGS) $(gnu_classpath_tools_gjdoc_jar_TXTS) \
 	$(gnu_classpath_tools_gjdoc_jar_XHTML) $(gnu_classpath_tools_gjdoc_jar_XSLS)
 
-GJDOC_EX = -path '*gnu/classpath/tools/gjdoc' -prune -o \
-	-path '*gnu/classpath/tools/doclets' -prune -o \
-	-path '*gnu/classpath/tools/taglets' -prune -o \
-	-path '*com/sun/javadoc' -prune -o \
-	-path '*com/sun/tools/doclets' -prune -o \
-	-path '*com/sun/tools/javadoc' -prune -o
+#GJDOC_EX = -path '*gnu/classpath/tools/gjdoc' -prune -o \
+#	-path '*gnu/classpath/tools/doclets' -prune -o \
+#	-path '*gnu/classpath/tools/taglets' -prune -o \
+#	-path '*com/sun/javadoc' -prune -o \
+#	-path '*com/sun/tools/doclets' -prune -o \
+#	-path '*com/sun/tools/javadoc' -prune -o
 
 
 # The zip files with classes we want to produce.
@@ -952,9 +952,9 @@ installcheck-binPROGRAMS: $(bin_PROGRAMS)
 #	@rm -f gjavah$(EXEEXT)
 #	$(AM_V_CCLD)$(gjavah_LINK) $(gjavah_OBJECTS) $(gjavah_LDADD) $(LIBS)
 
-gjdoc$(EXEEXT): $(gjdoc_OBJECTS) $(gjdoc_DEPENDENCIES) $(EXTRA_gjdoc_DEPENDENCIES) 
-	@rm -f gjdoc$(EXEEXT)
-	$(AM_V_CCLD)$(gjdoc_LINK) $(gjdoc_OBJECTS) $(gjdoc_LDADD) $(LIBS)
+#gjdoc$(EXEEXT): $(gjdoc_OBJECTS) $(gjdoc_DEPENDENCIES) $(EXTRA_gjdoc_DEPENDENCIES) 
+#	@rm -f gjdoc$(EXEEXT)
+#	$(AM_V_CCLD)$(gjdoc_LINK) $(gjdoc_OBJECTS) $(gjdoc_LDADD) $(LIBS)
 
 #gjdoc$(EXEEXT): $(gjdoc_OBJECTS) $(gjdoc_DEPENDENCIES) $(EXTRA_gjdoc_DEPENDENCIES) 
 #	@rm -f gjdoc$(EXEEXT)
@@ -1507,7 +1507,7 @@ gtnameserv: gtnameserv.in
 gorbd: gorbd.in
 grmid: grmid.in
 grmic: grmic.in
-#gjdoc: gjdoc.in
+gjdoc: gjdoc.in
 
 # Make sure everything is included in the distribution.
 dist-hook:
@@ -1532,9 +1532,9 @@ dist-hook:
 $(TOOLS_ZIP): $(ALL_TOOLS_FILES)
 	@rm -rf classes asm
 	$(MKDIR_P) classes asm 
-#	$(MKDIR_P) $(gjdoc_gendir)/gnu/classpath/tools/gjdoc/expr
-#	$(ANTLR) -o $(gjdoc_gendir)/gnu/classpath/tools/gjdoc/expr/ \
-#	  $(srcdir)/gnu/classpath/tools/gjdoc/expr/java-expression.g
+	$(MKDIR_P) $(gjdoc_gendir)/gnu/classpath/tools/gjdoc/expr
+	$(ANTLR) -o $(gjdoc_gendir)/gnu/classpath/tools/gjdoc/expr/ \
+	  $(srcdir)/gnu/classpath/tools/gjdoc/expr/java-expression.g
 	find $(srcdir)/external/asm -name '*.java' -print > asm.lst
 	AC=`echo $(JCOMPILER) | sed -e 's/UTF-8/ISO-8859-1/g'`; \
 	  $$AC -g -d asm @asm.lst
@@ -1557,12 +1557,12 @@ $(TOOLS_ZIP): $(ALL_TOOLS_FILES)
 	  echo "  cp $(srcdir)/resource/$$p classes/$$p"; \
 	  cp $(srcdir)/resource/$$p classes/$$p; \
 	done
-#	for res in $(gjdoc_resources); do \
-#	  dir=classes/`dirname $$res`; \
-#	  if ! test -d "$$dir"; then $(MKDIR_P) "$$dir"; fi; \
-#	  echo "  cp $(srcdir)/resource/gnu/classpath/tools/gjdoc/$$res classes/$$res"; \
-#	  cp $(srcdir)/resource/gnu/classpath/tools/gjdoc/$$res classes/$$res; \
-#	done 
+	for res in $(gjdoc_resources); do \
+	  dir=classes/`dirname $$res`; \
+	  if ! test -d "$$dir"; then $(MKDIR_P) "$$dir"; fi; \
+	  echo "  cp $(srcdir)/resource/gnu/classpath/tools/gjdoc/$$res classes/$$res"; \
+	  cp $(srcdir)/resource/gnu/classpath/tools/gjdoc/$$res classes/$$res; \
+	done 
 
 	(cd classes; \
 	$(CREATE_TOOLS_ZIP); \

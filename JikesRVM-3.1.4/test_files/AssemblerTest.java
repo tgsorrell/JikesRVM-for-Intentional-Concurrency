@@ -6,8 +6,6 @@ public class AssemblerTest{
   private String name;
   
   public AssemblerTest(){
-    for(int i = 0; i < 5; i++)
-      System.out.println("----------Create Object------------");
     name = "Assembler Test";
   }
   
@@ -23,12 +21,13 @@ public class AssemblerTest{
   }
   
   public static void main(String args[]){
-    for(int i = 0; i < 5; i++)
-      System.out.println("--------Start Main-------");
+    
     AssemblerTest at = new AssemblerTest();
-    for(int i = 0; i < 5; i++)
-      System.out.println("-----------Access Field----------");
-    at.getName();
+    at.setPermissionStatePrivate();
+    System.out.println(at.getName());
+    at.setPermissionStateFrozen();
+    System.out.println(at.getName());
+    System.out.println("Owning thread ID: " + at.getOwningThread());
     System.out.println("DONE");
   }
 }

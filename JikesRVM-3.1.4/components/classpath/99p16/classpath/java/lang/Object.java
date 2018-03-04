@@ -311,7 +311,8 @@ public class Object
   protected Object clone() throws CloneNotSupportedException
   {
     if (this instanceof Cloneable)
-      return VMObject.clone((Cloneable) this);
+      return null;
+    //VMObject.clone((Cloneable) this);
     throw new CloneNotSupportedException("Object not cloneable");
   }
 
@@ -328,7 +329,8 @@ public class Object
    */
   public final Class<? extends Object> getClass()
   {
-    return VMObject.getClass(this);
+    return null; 
+      //VMObject.getClass(this);
   }
 
   /**
@@ -358,7 +360,7 @@ public class Object
    */
   public final void notify() throws IllegalMonitorStateException
   {
-    VMObject.notify(this);
+    //VMObject.notify(this);
   }
 
   /**
@@ -387,7 +389,7 @@ public class Object
    */
   public final void notifyAll() throws IllegalMonitorStateException
   {
-    VMObject.notifyAll(this);
+    //VMObject.notifyAll(this);
   }
 
   /**
@@ -431,7 +433,7 @@ public class Object
   public final void wait()
     throws IllegalMonitorStateException, InterruptedException
   {
-    VMObject.wait(this, 0, 0);
+    //VMObject.wait(this, 0, 0);
   }
 
   /**
@@ -525,6 +527,33 @@ public class Object
   {
     if (ms < 0 || ns < 0 || ns > 999999)
       throw new IllegalArgumentException("argument out of range");
-    VMObject.wait(this, ms, ns);
+    //VMObject.wait(this, ms, ns);
   }
+  
+  //========================Intentional Concurrency=====================
+  
+  public final void setPermissionStatePrivate()
+  {                                   
+  }
+  
+  public final void setPermissionStateFrozen()
+  {
+  }
+  
+  //Change thread ownership
+  public final void setOwningThread(int ID)
+  {
+  }
+  
+  public final int getPermissionState()
+  {
+    return 0;
+  }
+  
+  public final int getOwningThread()
+  {
+    return 0;
+  }
+  
+  //====================================================================
 } // class Object

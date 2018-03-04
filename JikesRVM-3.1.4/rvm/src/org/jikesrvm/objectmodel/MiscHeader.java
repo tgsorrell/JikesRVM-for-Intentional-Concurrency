@@ -71,7 +71,7 @@ public final class MiscHeader {
   
   
   static final Offset PERMISSION_OFFSET = MISC_HEADER_START.plus(GC_TRACING_HEADER_BYTES);
-  static final Offset OWNER_OFFSET = MISC_HEADER_START.plus(PERMISSION_OFFSET);
+  static final Offset OWNER_OFFSET = PERMISSION_OFFSET.plus(BYTES_IN_ADDRESS);
   
   /*Permission field for intentional concurrency*/
   

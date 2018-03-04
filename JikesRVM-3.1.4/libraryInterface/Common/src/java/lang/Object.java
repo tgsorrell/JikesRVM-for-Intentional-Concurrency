@@ -51,17 +51,6 @@ public class Object {
     return ObjectModel.getObjectHashCode(this);
   }
   
-  public void printPermissionField()
-  {
-    if(VM.fullyBooted)
-      System.out.println(MiscHeader.getPermission(this).toInt());                                      
-  }
-  
-  public String myName()
-  {
-    return getClass().getName();
-  }
-  
   public final void notify() throws IllegalMonitorStateException {
     RVMThread.notify(this);
   }
@@ -104,4 +93,41 @@ public class Object {
       throw new IllegalArgumentException();
     }
   }
+  
+  //========================Intentional Concurrency=====================
+  public Object(){
+    if(VM.fullyBooted)
+    {
+      long id = RVMThread.getCurrentThread().getId();
+      setOwningThread((int)id);
+    }
+  }
+  
+  public void setPermissionStatePrivate()
+  {
+    MiscHeader.setPermission(this, 0);                                     
+  }
+  
+  public void setPermissionStateFrozen()
+  {
+    MiscHeader.setPermission(this, 1);
+  }
+  
+  //Change thread ownership
+  public void setOwningThread(int ID)
+  {
+    MiscHeader.setOwner(this, ID);
+  }
+  
+  public int getPermissionState()
+  {
+    return MiscHeader.getPermission(this).toInt();
+  }
+  
+  public int getOwningThread()
+  {
+    return MiscHeader.getOwner(this).toInt();
+  }
+  
+  //====================================================================
 }
