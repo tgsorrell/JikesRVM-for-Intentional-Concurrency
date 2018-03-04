@@ -98,7 +98,7 @@ public class Object {
   public Object(){
     if(VM.fullyBooted)
     {
-      long id = RVMThread.getCurrentThread().getId();
+      long id = Thread.currentThread().getId();
       setOwningThread((int)id);
     }
   }
@@ -121,12 +121,12 @@ public class Object {
   
   public int getPermissionState()
   {
-    return MiscHeader.getPermission(this).toInt();
+    return MiscHeader.getPermission(this);
   }
   
   public int getOwningThread()
   {
-    return MiscHeader.getOwner(this).toInt();
+    return MiscHeader.getOwner(this);
   }
   
   //====================================================================

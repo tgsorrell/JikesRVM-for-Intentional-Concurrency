@@ -919,13 +919,29 @@ public class RuntimeEntrypoints {
   //  Concurrency   //
   //----------------//
   @Entrypoint
-  public static void testPrint(Object o)
+  public static void testPrint(Object o) throws Exception
   {
-    
-    VM.sysWriteln("A get or set field has been detected");
     if(o != null)
     {
-       VM.sysWriteln(MiscHeader.getPermission(o));
+       int permission = MiscHeader.getPermission(o);
+       int curID = (int) Thread.currentThread().getId();
+       int ownerID = MiscHeader.getOwner(o);
+       
+       VM.sysWriteln("Permission: " + permission);
+       VM.sysWriteln("Current Thread ID: " + curID);
+       VM.sysWriteln("Owning Thread ID: " + ownerID);
+       
+       if(permission == 0 && curID != ownerID)
+       {
+         VM.sysWriteln("========================ERROR====================");
+         VM.sysWriteln("Invalid Access on object: " + o.toString());
+         VM.sysWriteln("Permission: " + permission);
+         VM.sysWriteln("Current Thread ID: " + curID);
+         VM.sysWriteln("Owning Thread ID: " + ownerID);
+         VM.sysWriteln("=================================================");
+       }
+         //athrow(new Exception("Intentional Concurrency: Invalid access of object"));
+       
     }
   }
 

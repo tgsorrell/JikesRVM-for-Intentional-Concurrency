@@ -154,12 +154,12 @@ public final class MiscHeader {
     }
   }
   
-  public static Word getPermission(Object object){
-    return Magic.objectAsAddress(object).plus(PERMISSION_OFFSET).loadWord();
+  public static int getPermission(Object object){
+    return Magic.objectAsAddress(object).plus(PERMISSION_OFFSET).loadWord().toInt();
   }
   
-  public static Word getOwner(Object object){
-    return Magic.objectAsAddress(object).plus(OWNER_OFFSET).loadWord();
+  public static int getOwner(Object object){
+    return Magic.objectAsAddress(object).plus(OWNER_OFFSET).loadWord().toInt();
   }
   
   public static void setPermission(Object o, int permission){
