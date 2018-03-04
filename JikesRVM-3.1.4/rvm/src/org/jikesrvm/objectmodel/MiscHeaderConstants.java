@@ -35,8 +35,8 @@ public final class MiscHeaderConstants {
   public static final int GC_TRACING_HEADER_BYTES = GC_TRACING_HEADER_WORDS << LOG_BYTES_IN_ADDRESS;
   
   
-  /* Attempt to add permission field */
-  public static final int PERMISSION_HEADER_WORDS = 1;
+  /* Support for Intentional Concurrency */
+  public static final int PERMISSION_HEADER_WORDS = 2;
   public static final int PERMISSION_HEADER_BYTES = PERMISSION_HEADER_WORDS << LOG_BYTES_IN_ADDRESS;
 
   /**

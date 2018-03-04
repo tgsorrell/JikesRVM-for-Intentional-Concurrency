@@ -26,6 +26,7 @@ import static org.jikesrvm.objectmodel.MiscHeaderConstants.PERMISSION_HEADER_BYT
 import org.jikesrvm.VM;
 import org.jikesrvm.runtime.Magic;
 import org.vmmagic.pragma.Entrypoint;
+import org.vmmagic.pragma.Pure;
 import org.vmmagic.pragma.Interruptible;
 import org.vmmagic.pragma.Uninterruptible;
 import org.vmmagic.unboxed.Address;
@@ -70,13 +71,18 @@ public final class MiscHeader {
   
   
   static final Offset PERMISSION_OFFSET = MISC_HEADER_START.plus(GC_TRACING_HEADER_BYTES);
+  static final Offset OWNER_OFFSET = MISC_HEADER_START.plus(PERMISSION_OFFSET);
   
   /*Permission field for intentional concurrency*/
   
+  //The Intentional Concurrency Permission State. Private by default.
   private static Word permission;
+  //ID of the thread that owns the object
+  private static Word owner;
   
   static {
-    permission = Word.fromIntSignExtend(15);
+    permission = Word.fromIntSignExtend(0);
+    owner = Word.fromIntSignExtend(0);
   }
   
   //=====================================GC TRACE Fields==========================================
@@ -113,9 +119,9 @@ public final class MiscHeader {
   @Uninterruptible
   public static void initializeHeader(Object obj, TIB tib, int size, boolean isScalar) {
     
-    //Put permission initialization here?
     Address ref = Magic.objectAsAddress(obj);
     ref.store(permission, PERMISSION_OFFSET);
+    ref.store(owner, OWNER_OFFSET);
     
     /* Only perform initialization when it is required */
     if (GENERATE_GC_TRACE) {
@@ -150,6 +156,20 @@ public final class MiscHeader {
   
   public static Word getPermission(Object object){
     return Magic.objectAsAddress(object).plus(PERMISSION_OFFSET).loadWord();
+  }
+  
+  public static Word getOwner(Object object){
+    return Magic.objectAsAddress(object).plus(OWNER_OFFSET).loadWord();
+  }
+  
+  public static void setPermission(Object o, int permission){
+    Word perm = Word.fromIntSignExtend(permission);
+    Magic.objectAsAddress(o).store(perm, PERMISSION_OFFSET);
+  }
+  
+  public static void setOwner(Object o, int ID){
+    Word id = Word.fromIntSignExtend(ID);
+    Magic.objectAsAddress(o).store(id, OWNER_OFFSET);
   }
   
   //========================================GC TRACE CODE==============================================

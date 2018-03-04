@@ -31,7 +31,7 @@ public class Entrypoints {
   //
   
   public static final RVMMethod testPrint = 
-    getMethod(org.jikesrvm.runtime.RuntimeEntrypoints.class, "testPrint", "()V");
+    getMethod(org.jikesrvm.runtime.RuntimeEntrypoints.class, "testPrint", "(Ljava/lang/Object;)V");
 
   public static final NormalMethod bootMethod = EntrypointHelper.getMethod(org.jikesrvm.VM.class, "boot", "()V");
 

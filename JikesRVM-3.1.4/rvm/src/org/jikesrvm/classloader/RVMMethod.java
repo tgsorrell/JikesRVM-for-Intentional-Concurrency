@@ -533,6 +533,10 @@ public abstract class RVMMethod extends RVMMember {
   public final boolean isPure() {
     return hasPureAnnotation() || hasRuntimePureAnnotation();
   }
+  
+  public final boolean hasNoThreadCheck(){
+    return isAnnotationPresent(org.jikesrvm.annotations.NoThreadCheck.class);
+  }
 
   /**
    * Is the method RuntimePure? This is the same as Pure at runtime but has a

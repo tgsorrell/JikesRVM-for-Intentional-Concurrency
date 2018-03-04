@@ -36,6 +36,7 @@ import org.jikesrvm.mm.mminterface.Barriers;
 import org.jikesrvm.mm.mminterface.MemoryManager;
 import org.jikesrvm.objectmodel.ObjectModel;
 import org.jikesrvm.objectmodel.TIB;
+import org.jikesrvm.objectmodel.MiscHeader;
 import org.jikesrvm.scheduler.RVMThread;
 import org.jikesrvm.util.Services;
 import org.vmmagic.pragma.Entrypoint;
@@ -48,6 +49,8 @@ import org.vmmagic.pragma.UnpreemptibleNoWarn;
 import org.vmmagic.unboxed.Address;
 import org.vmmagic.unboxed.Offset;
 import org.vmmagic.unboxed.Word;
+
+import org.jikesrvm.annotations.NoThreadCheck;
 
 /**
  * Entrypoints into the runtime of the virtual machine.
@@ -916,12 +919,14 @@ public class RuntimeEntrypoints {
   //  Concurrency   //
   //----------------//
   @Entrypoint
-  public static void testPrint()
+  public static void testPrint(Object o)
   {
     
     VM.sysWriteln("A get or set field has been detected");
-    //if(o != null)
-    //  VM.sysWriteln(o.toString());
+    if(o != null)
+    {
+       VM.sysWriteln(MiscHeader.getPermission(o));
+    }
   }
 
   //----------------//

@@ -115,6 +115,7 @@ import org.vmmagic.pragma.Pure;
 import org.vmmagic.pragma.Uninterruptible;
 import org.vmmagic.unboxed.Offset;
 
+
 /**
  * BaselineCompilerImpl is the baseline compiler implementation for the IA32 architecture.
  */
@@ -2452,20 +2453,16 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
     }
   }
 
+  
+  //Intentional Concurrency
   private void insertThreadCheck(){
+    
     if(VM.fullyBooted)
     {
-      
+      //Assumes an object reference is on the stack. This duplicates it.
+      asm.emitPUSH_RegInd(SP);
       emit_unresolved_invokestatic(Entrypoints.testPrint.getMemberRef().asMethodReference());
       
-      /*
-      MethodReference methodRef = Entrypoints.testPrint.getMemberRef().asMethodReference();
-      
-      emitDynamicLinkingSequence(asm, S0, methodRef, true);
-      genParameterRegisterLoad(methodRef, false);
-      asm.generateJTOCcall(S0);
-      genResultRegisterUnload(methodRef);
-      */
     }
   }
   
