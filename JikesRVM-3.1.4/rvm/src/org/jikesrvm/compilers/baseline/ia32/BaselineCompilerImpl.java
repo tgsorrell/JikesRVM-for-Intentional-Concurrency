@@ -2457,7 +2457,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   //Intentional Concurrency
   private void insertThreadCheck(){
     
-    if(VM.fullyBooted && !method.isPure())
+    if(VM.SafeForConcurrency)
     {
       //Assumes an object reference is on the stack. This duplicates it.
       asm.emitPUSH_RegInd(SP);

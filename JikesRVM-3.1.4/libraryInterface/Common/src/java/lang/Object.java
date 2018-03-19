@@ -96,10 +96,17 @@ public class Object {
   
   //========================Intentional Concurrency=====================
   public Object(){
-    if(VM.fullyBooted)
+    if(VM.SafeForConcurrency)
     {
-      long id = Thread.currentThread().getId();
-      setOwningThread((int)id);
+      Thread t = Thread.currentThread();
+      //if(t.getName().equals("Jikes_RBoot_Thread"))
+      //   MiscHeader.setPermission(this, 1);
+      setOwningThread((int)t.getId());
+    }
+    else
+    {
+      MiscHeader.setPermission(this, 1);
+      setOwningThread(44);
     }
   }
   

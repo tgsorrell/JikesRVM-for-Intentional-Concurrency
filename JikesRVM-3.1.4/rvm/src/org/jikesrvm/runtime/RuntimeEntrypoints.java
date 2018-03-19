@@ -921,10 +921,18 @@ public class RuntimeEntrypoints {
   @Entrypoint
   public static void testPrint(Object o) throws Exception
   {
-    if(o != null)
+    if(o != null && !(o instanceof Thread))
     {
+       
+       VM.sysWriteln("");
+       Thread current = Thread.currentThread();
+       int curID = (int) current.getId();
+       
+       VM.sysWriteln(current.getName());
+       //if(current.getName().equals("Jikes_RBoot_Thread"))
+       //  MiscHeader.setPermission(o, 1);
+       
        int permission = MiscHeader.getPermission(o);
-       int curID = (int) Thread.currentThread().getId();
        int ownerID = MiscHeader.getOwner(o);
        
        VM.sysWriteln("Permission: " + permission);
@@ -934,13 +942,15 @@ public class RuntimeEntrypoints {
        if(permission == 0 && curID != ownerID)
        {
          VM.sysWriteln("========================ERROR====================");
-         VM.sysWriteln("Invalid Access on object: " + o.toString());
+         //VM.sysWriteln("Invalid Access on object: " + o.toString());
          VM.sysWriteln("Permission: " + permission);
+         VM.sysWriteln("Current thread: " + Thread.currentThread().toString());
          VM.sysWriteln("Current Thread ID: " + curID);
          VM.sysWriteln("Owning Thread ID: " + ownerID);
          VM.sysWriteln("=================================================");
        }
          //athrow(new Exception("Intentional Concurrency: Invalid access of object"));
+       VM.sysWriteln("");
        
     }
   }

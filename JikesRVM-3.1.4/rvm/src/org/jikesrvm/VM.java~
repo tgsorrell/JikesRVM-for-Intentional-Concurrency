@@ -76,14 +76,11 @@ public class VM extends Properties {
    * For assertion checking things that should never happen.
    */
   public static final boolean NOT_REACHED = false;
-  
-  public static boolean SafeForConcurrency = false;
 
   /**
    * Reference to the main thread that is the first none VM thread run
    */
   public static MainThread mainThread;
-  
 
   //----------------------------------------------------------------------//
   //                          Initialization.                             //
@@ -438,7 +435,6 @@ public class VM extends Properties {
       runClassInitializer("java.lang.reflect.Proxy$ProxySignature");
     }
     runClassInitializer("java.util.logging.Logger");
-    //Invalid access somewhere in here
     if (VM.BuildForHarmony) {
       Entrypoints.luni1.setObjectValueUnchecked(null, null);
       Entrypoints.luni2.setObjectValueUnchecked(null, null);
@@ -452,8 +448,7 @@ public class VM extends Properties {
       runClassInitializer("org.apache.harmony.luni.internal.nls.Messages");
       runClassInitializer("org.apache.harmony.nio.internal.nls.Messages");
       runClassInitializer("org.apache.harmony.niochar.internal.nls.Messages");
-      runClassInitializer("java.util.logging.LogManager"); //Invalid access being made on LogManager.
-      //Need to investigate runClassInitializerMethod.
+      runClassInitializer("java.util.logging.LogManager");
     }
 
     // Initialize compiler that compiles dynamically loaded classes.
@@ -517,9 +512,6 @@ public class VM extends Properties {
     }
 
     Time.boot();
-    
-    //Intentional Concurrency
-    SafeForConcurrency = true;
 
     // Schedule "main" thread for execution.
     if (verboseBoot >= 2) VM.sysWriteln("Creating main thread");

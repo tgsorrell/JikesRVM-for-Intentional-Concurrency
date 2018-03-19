@@ -44,7 +44,6 @@ import org.jikesrvm.mm.mminterface.CollectorThread;
 import org.jikesrvm.mm.mminterface.MemoryManager;
 import org.jikesrvm.mm.mminterface.ThreadContext;
 import org.jikesrvm.objectmodel.ObjectModel;
-import org.jikesrvm.objectmodel.MiscHeader;
 import org.jikesrvm.osr.ObjectHolder;
 import org.jikesrvm.runtime.BootRecord;
 import org.jikesrvm.runtime.Entrypoints;
@@ -1632,12 +1631,6 @@ public final class RVMThread extends ThreadContext {
     * @param priority The threads execution priority.
     */
    public RVMThread(byte[] stack, Thread thread, String name, boolean daemon, SystemThread systemThread, int priority) {
-    
-     
-    //Intentional Concurrency, allows a thread to access itself
-    MiscHeader.setPermission(this, 1);
-   
-     
     this.stack = stack;
 
     this.daemon = daemon;
@@ -1722,9 +1715,6 @@ public final class RVMThread extends ThreadContext {
         // create wrapper Thread if doesn't exist
         this.thread = java.lang.JikesRVMSupport.createThread(this, name);
       }
-      
-      //Intentional concurrency, allows a thread to access itself
-      MiscHeader.setPermission(this.thread, 1);
     }
   }
 
