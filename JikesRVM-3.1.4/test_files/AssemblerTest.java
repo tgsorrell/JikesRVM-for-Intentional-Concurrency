@@ -42,7 +42,6 @@ public class AssemblerTest{
     AssemblerTest at = new AssemblerTest();
     Thread t = new Thread(new Test(at));
     t.start();
-    System.out.println("Valid access: " + at.getName());
     try{
     t.join();
     }
@@ -50,6 +49,7 @@ public class AssemblerTest{
     {
       e.printStackTrace();
     }
+    System.out.println("Valid access: " + at.getName());
     System.out.println("DONE");
   }
 }

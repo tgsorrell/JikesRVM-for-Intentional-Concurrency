@@ -28,6 +28,17 @@ import org.jikesrvm.VM;
  */
 public class Object {
 
+  public static enum Permission {
+	PRIVATE,
+	FROZEN,
+	TRANSFER,
+	LOAN,
+	SAMEAS,
+	SAFE,
+	PERMANENTLYSAFE;
+	public static final Permission[] values = values();
+  }
+
   @SuppressWarnings({"PMD.ProperCloneImplementation","PMD.CloneMethodMustImplementCloneable","CloneDoesntCallSuperClone"})
   protected Object clone() throws CloneNotSupportedException {
     return RuntimeEntrypoints.clone(this);
@@ -109,8 +120,51 @@ public class Object {
       setOwningThread(44);
     }
   }
+
+  public void setPermission(Object.Permission permission) {
+	Permission p = Object.Permission.values[this.getPermissionState()];
+	switch (p) {
+		case PRIVATE:
+			if (this.getOwningThread() == Thread.currentThread().getId()) {
+				MiscHeader.setPermission(this, permission.ordinal());
+			} else {
+				if (VM.fullyBooted) {
+					System.err.println("Invalid permission reset: Only original thread can change private permission.");
+				}
+			}
+			break;
+		case FROZEN:
+			if (VM.fullyBooted) {
+				System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
+			}
+			break;
+		case TRANSFER:
+			//TODO: Implement this
+			break;
+		case LOAN:
+			//TODO: Implement this
+			break;
+		case SAMEAS:
+			//TODO: Leader information needs to be implemented.
+			break;
+		case SAFE:
+			MiscHeader.setPermission(this, permission.ordinal());
+			break;
+		case PERMANENTLYSAFE:
+			if (VM.fullyBooted) {
+				System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
+			}
+			break;
+		default:
+			if (VM.fullyBooted){
+				System.err.print("Object had invalid permission.");
+			}
+			MiscHeader.setPermission(this, permission.ordinal());
+			break;
+	}
+  }
   
-  public void setPermissionStatePrivate()
+/*  public void setPermissionStatePrivate()
   {
     MiscHeader.setPermission(this, 0);                                     
   }
@@ -118,7 +172,7 @@ public class Object {
   public void setPermissionStateFrozen()
   {
     MiscHeader.setPermission(this, 1);
-  }
+  } */
   
   //Change thread ownership
   public void setOwningThread(int ID)
