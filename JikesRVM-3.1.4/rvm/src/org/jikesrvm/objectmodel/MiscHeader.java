@@ -120,7 +120,10 @@ public final class MiscHeader {
   public static void initializeHeader(Object obj, TIB tib, int size, boolean isScalar) {
     
     Address ref = Magic.objectAsAddress(obj);
-    ref.store(permission, PERMISSION_OFFSET);
+    if(VM.SafeForConcurrency)
+      ref.store(permission, PERMISSION_OFFSET);
+    else
+      ref.store(Word.fromIntSignExtend(1), PERMISSION_OFFSET);
     ref.store(owner, OWNER_OFFSET);
     
     /* Only perform initialization when it is required */

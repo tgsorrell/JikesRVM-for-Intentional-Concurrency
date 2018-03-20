@@ -39,14 +39,15 @@ public class AssemblerTest{
   
   public static void main(String args[]){
     
+    
     AssemblerTest at = new AssemblerTest();
+    at.setPermission(Object.ConcurrencyPermission.FROZEN);
     Thread t = new Thread(new Test(at));
     t.start();
     try{
-    t.join();
+      t.join();
     }
-    catch(Exception e)
-    {
+    catch(Exception e){
       e.printStackTrace();
     }
     System.out.println("Valid access: " + at.getName());

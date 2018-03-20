@@ -532,6 +532,11 @@ public class Object
   
   //========================Intentional Concurrency=====================
   
+  public final void setPermission(Object.ConcurrencyPermission permission)
+  {
+  }
+  
+  /*
   public final void setPermissionStatePrivate()
   {                                   
   }
@@ -539,6 +544,7 @@ public class Object
   public final void setPermissionStateFrozen()
   {
   }
+  */
   
   //Change thread ownership
   public final void setOwningThread(int ID)
@@ -553,6 +559,17 @@ public class Object
   public final int getOwningThread()
   {
     return 0;
+  }
+  
+  public static enum ConcurrencyPermission {
+ PRIVATE,
+ FROZEN,
+ TRANSFER,
+ LOAN,
+ SAMEAS,
+ SAFE,
+ PERMANENTLYSAFE;
+ public static final ConcurrencyPermission[] values = values();
   }
   
   //====================================================================

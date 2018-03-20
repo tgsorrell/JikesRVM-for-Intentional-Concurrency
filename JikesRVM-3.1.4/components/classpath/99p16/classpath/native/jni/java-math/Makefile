@@ -254,7 +254,7 @@ ECHO_N = -n
 ECHO_T = 
 ECJ_JAR = 
 EGREP = /bin/grep -E
-ERROR_CFLAGS = 
+ERROR_CFLAGS = -Werror
 EXAMPLESDIR = examples
 EXEEXT = 
 EXTRA_CFLAGS = -fexceptions -fasynchronous-unwind-tables
@@ -435,7 +435,7 @@ libjavamath_la_LIBADD = $(top_builddir)/native/jni/classpath/jcl.lo
 libjavamath_la_LDFLAGS = $(AM_LDFLAGS) -avoid-version
 AM_LDFLAGS = -module -version-info 0:0:0 -no-undefined 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/native/jni/classpath -I$(top_srcdir)/native/jni/native-lib
-AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long  
+AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long -Werror 
 all: all-am
 
 .SUFFIXES:

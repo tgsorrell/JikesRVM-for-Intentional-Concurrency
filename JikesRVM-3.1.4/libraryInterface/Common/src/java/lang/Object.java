@@ -28,15 +28,15 @@ import org.jikesrvm.VM;
  */
 public class Object {
 
-  public static enum Permission {
-	PRIVATE,
-	FROZEN,
-	TRANSFER,
-	LOAN,
-	SAMEAS,
-	SAFE,
-	PERMANENTLYSAFE;
-	public static final Permission[] values = values();
+  public static enum ConcurrencyPermission {
+ PRIVATE,
+ FROZEN,
+ TRANSFER,
+ LOAN,
+ SAMEAS,
+ SAFE,
+ PERMANENTLYSAFE;
+ public static final ConcurrencyPermission[] values = values();
   }
 
   @SuppressWarnings({"PMD.ProperCloneImplementation","PMD.CloneMethodMustImplementCloneable","CloneDoesntCallSuperClone"})
@@ -121,47 +121,47 @@ public class Object {
     }
   }
 
-  public void setPermission(Object.Permission permission) {
-	Permission p = Object.Permission.values[this.getPermissionState()];
-	switch (p) {
-		case PRIVATE:
-			if (this.getOwningThread() == Thread.currentThread().getId()) {
-				MiscHeader.setPermission(this, permission.ordinal());
-			} else {
-				if (VM.fullyBooted) {
-					System.err.println("Invalid permission reset: Only original thread can change private permission.");
-				}
-			}
-			break;
-		case FROZEN:
-			if (VM.fullyBooted) {
-				System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
-			}
-			break;
-		case TRANSFER:
-			//TODO: Implement this
-			break;
-		case LOAN:
-			//TODO: Implement this
-			break;
-		case SAMEAS:
-			//TODO: Leader information needs to be implemented.
-			break;
-		case SAFE:
-			MiscHeader.setPermission(this, permission.ordinal());
-			break;
-		case PERMANENTLYSAFE:
-			if (VM.fullyBooted) {
-				System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
-			}
-			break;
-		default:
-			if (VM.fullyBooted){
-				System.err.print("Object had invalid permission.");
-			}
-			MiscHeader.setPermission(this, permission.ordinal());
-			break;
-	}
+  public void setPermission(Object.ConcurrencyPermission permission) {
+ ConcurrencyPermission p = Object.ConcurrencyPermission.values[this.getPermissionState()];
+ switch (p) {
+  case PRIVATE:
+   if (this.getOwningThread() == Thread.currentThread().getId()) {
+    MiscHeader.setPermission(this, permission.ordinal());
+   } else {
+    if (VM.fullyBooted) {
+     System.err.println("Invalid permission reset: Only original thread can change private permission.");
+    }
+   }
+   break;
+  case FROZEN:
+   if (VM.fullyBooted) {
+    System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
+   }
+   break;
+  case TRANSFER:
+   //TODO: Implement this
+   break;
+  case LOAN:
+   //TODO: Implement this
+   break;
+  case SAMEAS:
+   //TODO: Leader information needs to be implemented.
+   break;
+  case SAFE:
+   MiscHeader.setPermission(this, permission.ordinal());
+   break;
+  case PERMANENTLYSAFE:
+   if (VM.fullyBooted) {
+    System.err.println("Invalid permission reset: Unable to change permission of frozen object.");
+   }
+   break;
+  default:
+   if (VM.fullyBooted){
+    System.err.print("Object had invalid permission.");
+   }
+   MiscHeader.setPermission(this, permission.ordinal());
+   break;
+ }
   }
   
 /*  public void setPermissionStatePrivate()
