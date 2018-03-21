@@ -110,14 +110,12 @@ public class Object {
     if(VM.SafeForConcurrency)
     {
       Thread t = Thread.currentThread();
-      //if(t.getName().equals("Jikes_RBoot_Thread"))
-      //   MiscHeader.setPermission(this, 1);
       setOwningThread((int)t.getId());
     }
     else
     {
-      MiscHeader.setPermission(this, 1);
-      setOwningThread(44);
+      //Don't want to worry about non-user code, set to Threadsafe
+      MiscHeader.setPermission(this, 5);
     }
   }
 
@@ -139,7 +137,12 @@ public class Object {
    }
    break;
   case TRANSFER:
-   //TODO: Implement this
+   //TODO: Verify this is the correct approach. Currently transfers ownership
+   // to thread attempting to change permission
+    if (this.getOwningThread() != Thread.currentThread().getId()) {
+      MiscHeader.setOwner(this, (int) Thread.currentThread().getId());
+      MiscHeader.setPermission(this, permission.ordinal());
+   }
    break;
   case LOAN:
    //TODO: Implement this
@@ -163,16 +166,6 @@ public class Object {
    break;
  }
   }
-  
-/*  public void setPermissionStatePrivate()
-  {
-    MiscHeader.setPermission(this, 0);                                     
-  }
-  
-  public void setPermissionStateFrozen()
-  {
-    MiscHeader.setPermission(this, 1);
-  } */
   
   //Change thread ownership
   public void setOwningThread(int ID)
