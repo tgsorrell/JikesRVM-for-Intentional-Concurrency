@@ -32,7 +32,12 @@ public class AssemblerTest{
     public void run(){
       
       for(int i = 0; i < 3; i++)
-        System.out.println("Should be an invalid access: " + mine.getName());
+	try {
+        	System.out.println("Should be an invalid access: " + mine.getName());
+		assert(false); //Unreached
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
       
       //System.out.println(Thread.currentThread().getPermissionState());
       //System.out.println(Thread.currentThread().getOwningThread());
