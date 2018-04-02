@@ -918,61 +918,72 @@ public class RuntimeEntrypoints {
   //----------------//
   //  Concurrency   //
   //----------------//
-  //TODO: Split into different methods for read/write.
+  // @param o: the object whose field is being accessed
+  // @param read: the type of access. 1 for read, 0 for write
+  
   @Entrypoint
-  public static void testPrint(Object o) throws Exception
+  public static void threadCheck(Object o, int read) throws Exception
   {
-    if(o != null && !(o instanceof Thread))
+    if(o != null)
     {
        
-       VM.sysWriteln("");
        Thread current = Thread.currentThread();
-       int curID = (int) current.getId();
-       
-       VM.sysWriteln(current.getName());
-       //if(current.getName().equals("Jikes_RBoot_Thread"))
-       //  MiscHeader.setPermission(o, 1);
-       
+       int curID = (int) current.getId(); 
        int permission = MiscHeader.getPermission(o);
        int ownerID = MiscHeader.getOwner(o);
        
-       //VM.sysWriteln("Permission: " + permission);
-       //VM.sysWriteln("Current Thread ID: " + curID);
-       //VM.sysWriteln("Owning Thread ID: " + ownerID);
        
        switch(permission) {
-		case 0: //Private
-			if (curID != ownerID) {
-				 VM.sysWriteln("========================ERROR====================");
-				 //VM.sysWriteln("Invalid Access on object: " + o.toString());
-				 VM.sysWriteln("Permission: " + permission);
-				 VM.sysWriteln("Current thread: " + Thread.currentThread().toString());
-				 VM.sysWriteln("Current Thread ID: " + curID);
-				 VM.sysWriteln("Owning Thread ID: " + ownerID);
-				 VM.sysWriteln("=================================================");
-			}
-			break;
-		case 1: //Frozen
-			//TODO: Read -> Allow, Write -> Deny
-			break;
-		case 2: //Transfer?
-			//TODO: Read/Write -> Change Permission of object to private and thread to current thread?
-			break;
-		case 3: //Loan?
-			//TODO: Implement way to track original thread so that this can revert back to original owner.
-			break;
-		case 4: //SameAs(Leader)?
-			//TODO: Implement leader in object so that here we can call this on the leader.
-			break;
-		case 5: //ThreadSafe
-		case 6: //PermanentlyThreadSafe?
-			break;
-		default:
-			break;				
+         case 0: //Private
+           if (curID != ownerID) {
+           VM.sysWriteln("\n============CONCURRENCY ERROR============");
+           VM.sysWriteln("Invalid access on private field");
+           //TODO: We probably want some information about where the access is
+           VM.sysWriteln("Access in method " + " of class " ); //?
+           VM.sysWriteln("Object that owns field: " + o.getClass());
+           VM.sysWriteln("Current Thread ID: " + curID);
+           VM.sysWriteln("Owning Thread ID: " + ownerID);
+           VM.sysWriteln("=========================================\n");
+         }
+           break;
+         case 1: //Frozen
+           //Read (1) -> Allow, Write (0) -> Deny
+           if (read == 0) {
+           VM.sysWriteln("\n============CONCURRENCY ERROR============");
+           VM.sysWriteln("Invalid attempt to write to frozen field");
+           //TODO: We probably want some information about where the access is
+           VM.sysWriteln("Access in method x" + " of class y" ); //?
+           VM.sysWriteln("Object that owns field: " + o.getClass());
+           VM.sysWriteln("Current Thread ID: " + curID);
+           VM.sysWriteln("Owning Thread ID: " + ownerID);
+           VM.sysWriteln("=========================================\n");
+         }
+           break;
+         case 2: //Transfer
+           //Read/Write -> Change Permission of object to private and thread to current thread
+           if(curID != ownerID)
+           {
+             o.setOwningThread(curID);
+             o.setPermission(Object.ConcurrencyPermission.PRIVATE);
+           }
+           break;
+         case 3: //Loan?
+           //TODO: Implement way to track original thread so that this can revert back to original owner.
+           break;
+         case 4: //SameAs(Leader)?
+           //TODO: Implement leader in object so that here we can call this on the leader.
+           break;
+         //Nothing required for these cases
+         case 5: //ThreadSafe
+         case 6: //PermanentlyThreadSafe?
+           break;
+         default:
+           break;    
        }
 
+        //Can be used to throw an exception, if desired in the future
         //athrow(new Exception("Intentional Concurrency: Invalid access of object"));
-       VM.sysWriteln("");
+       
        
     }
   }

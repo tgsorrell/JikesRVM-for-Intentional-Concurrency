@@ -33,20 +33,27 @@ public class AssemblerTest{
       
       for(int i = 0; i < 3; i++)
         System.out.println("Should be an invalid access: " + mine.getName());
+      
+      //System.out.println(Thread.currentThread().getPermissionState());
+      //System.out.println(Thread.currentThread().getOwningThread());
+      
     }
       
   }
   
   public static void main(String args[]){
     
+    
     AssemblerTest at = new AssemblerTest();
-    Thread t = new Thread(new Test(at));
+    //at.setPermission(Object.ConcurrencyPermission.FROZEN);
+    Test test = new Test(at);
+    test.setPermission(Object.ConcurrencyPermission.FROZEN);
+    Thread t = new Thread(test);
     t.start();
     try{
-    t.join();
+      t.join();
     }
-    catch(Exception e)
-    {
+    catch(Exception e){
       e.printStackTrace();
     }
     System.out.println("Valid access: " + at.getName());

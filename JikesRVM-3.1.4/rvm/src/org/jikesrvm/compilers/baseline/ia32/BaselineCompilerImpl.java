@@ -2455,14 +2455,26 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
 
   
   //Intentional Concurrency
-  private void insertThreadCheck(){
+  // 1 for read, 0 for write
+  private void insertThreadCheck(int read){
     
-    if(VM.SafeForConcurrency)
-    {
-      //Assumes an object reference is on the stack. This duplicates it.
-      asm.emitPUSH_RegInd(SP);
-      emit_unresolved_invokestatic(Entrypoints.testPrint.getMemberRef().asMethodReference());
-      
+    String packageName = klass.toString();
+    if(VM.SafeForConcurrency){   
+      if(!(packageName.contains("java") ||
+           packageName.contains("gnu") ||
+           packageName.contains("jikesrvm")))
+      {
+        //Assumes an object reference is on the stack. This duplicates it.
+        asm.emitPUSH_RegInd(SP);
+        asm.emitPUSH_Imm(read);
+        genParameterRegisterLoad(asm, 2);
+        emit_unresolved_invokestatic(Entrypoints.threadCheck.getMemberRef().asMethodReference());
+        
+      }
+      else
+      {
+        //VM.sysWriteln("Class " + packageName + " is not safe");
+      }
     }
   }
   
@@ -2470,7 +2482,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   protected void emit_unresolved_getfield(FieldReference fieldRef) {
    
     //ADDED
-    insertThreadCheck();
+    insertThreadCheck(1);
     
     TypeReference fieldType = fieldRef.getFieldContentsType();
     emitDynamicLinkingSequence(asm, T0, fieldRef, true);
@@ -2545,7 +2557,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   protected void emit_resolved_getfield(FieldReference fieldRef) {
     
     //ADDED
-    insertThreadCheck();
+    insertThreadCheck(1);
     
     TypeReference fieldType = fieldRef.getFieldContentsType();
     RVMField field = fieldRef.peekResolvedField();
@@ -2628,7 +2640,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
     try {
       
       //ADDED
-      insertThreadCheck();
+      insertThreadCheck(1);
       
       Offset offset = localOffset(index);
       TypeReference fieldType = fieldRef.getFieldContentsType();
@@ -2710,7 +2722,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   protected void emit_unresolved_putfield(FieldReference fieldRef) {
     
     //ADDED
-    insertThreadCheck();
+    insertThreadCheck(0);
     
     Barriers.compileModifyCheck(asm, fieldRef.getNumberOfStackSlots() * WORDSIZE);
     TypeReference fieldType = fieldRef.getFieldContentsType();
@@ -2807,7 +2819,7 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   protected void emit_resolved_putfield(FieldReference fieldRef) {
     
     //ADDED
-    insertThreadCheck();
+    insertThreadCheck(0);
     
     Barriers.compileModifyCheck(asm, fieldRef.getNumberOfStackSlots() * WORDSIZE);
     RVMField field = fieldRef.peekResolvedField();

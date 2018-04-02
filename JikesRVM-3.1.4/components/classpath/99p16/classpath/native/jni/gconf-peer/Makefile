@@ -254,7 +254,7 @@ ECHO_N = -n
 ECHO_T = 
 ECJ_JAR = 
 EGREP = /bin/grep -E
-ERROR_CFLAGS = 
+ERROR_CFLAGS = -Werror
 EXAMPLESDIR = examples
 EXEEXT = 
 EXTRA_CFLAGS = -fexceptions -fasynchronous-unwind-tables
@@ -435,7 +435,7 @@ libgconfpeer_la_LIBADD = $(top_builddir)/native/jni/classpath/jcl.lo
 libgconfpeer_la_LDFLAGS = $(AM_LDFLAGS) -avoid-version
 AM_LDFLAGS = -module -version-info 0:0:0 -no-undefined -lgconf-2 -lglib-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -lpango-1.0 -lcairo -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/native/jni/classpath -I$(top_srcdir)/native/jni/native-lib
-AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long  -pthread -I/usr/include/gconf/2 -I/usr/include/dbus-1.0 -I/usr/lib/i386-linux-gnu/dbus-1.0/include -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -pthread -I/usr/include/gtk-2.0 -I/usr/lib/i386-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include \
+AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long -Werror -pthread -I/usr/include/gconf/2 -I/usr/include/dbus-1.0 -I/usr/lib/i386-linux-gnu/dbus-1.0/include -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -pthread -I/usr/include/gtk-2.0 -I/usr/lib/i386-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include \
             -fexceptions -fasynchronous-unwind-tables
 
 all: all-am

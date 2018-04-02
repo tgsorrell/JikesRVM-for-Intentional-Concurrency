@@ -438,7 +438,7 @@ public class VM extends Properties {
       runClassInitializer("java.lang.reflect.Proxy$ProxySignature");
     }
     runClassInitializer("java.util.logging.Logger");
-    //Invalid access somewhere in here
+    
     if (VM.BuildForHarmony) {
       Entrypoints.luni1.setObjectValueUnchecked(null, null);
       Entrypoints.luni2.setObjectValueUnchecked(null, null);
@@ -452,8 +452,7 @@ public class VM extends Properties {
       runClassInitializer("org.apache.harmony.luni.internal.nls.Messages");
       runClassInitializer("org.apache.harmony.nio.internal.nls.Messages");
       runClassInitializer("org.apache.harmony.niochar.internal.nls.Messages");
-      runClassInitializer("java.util.logging.LogManager"); //Invalid access being made on LogManager.
-      //Need to investigate runClassInitializerMethod.
+      runClassInitializer("java.util.logging.LogManager");
     }
 
     // Initialize compiler that compiles dynamically loaded classes.

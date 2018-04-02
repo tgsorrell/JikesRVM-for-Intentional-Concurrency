@@ -29,9 +29,8 @@ public class Entrypoints {
   //  1. you misspelled the class name, member name, or member signature
   //  2. the class containing the specified member didn't get compiled
   //
-  
-  public static final RVMMethod testPrint = 
-    getMethod(org.jikesrvm.runtime.RuntimeEntrypoints.class, "testPrint", "(Ljava/lang/Object;)V");
+  public static final RVMMethod threadCheck = 
+    getMethod(org.jikesrvm.runtime.RuntimeEntrypoints.class, "threadCheck", "(Ljava/lang/Object;I)V");
 
   public static final NormalMethod bootMethod = EntrypointHelper.getMethod(org.jikesrvm.VM.class, "boot", "()V");
 
