@@ -1,0 +1,10 @@
+import java.util.*;
+
+public class Pi {
+  
+  public final int intervals = 500000;
+  public final int width = 1/intervals;
+  
+  
+  
+}

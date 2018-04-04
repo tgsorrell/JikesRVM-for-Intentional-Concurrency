@@ -168,6 +168,7 @@ public class Object {
   }
   
   //Change thread ownership
+  //TODO: this probably shouldn't be public. Make sure changing it won't break anything.
   public void setOwningThread(int ID)
   {
     MiscHeader.setOwner(this, ID);

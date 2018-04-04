@@ -2471,10 +2471,6 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
         emit_unresolved_invokestatic(Entrypoints.threadCheck.getMemberRef().asMethodReference());
         
       }
-      else
-      {
-        //VM.sysWriteln("Class " + packageName + " is not safe");
-      }
     }
   }
   

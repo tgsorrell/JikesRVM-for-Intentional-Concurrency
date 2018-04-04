@@ -1,0 +1,8 @@
+import java.util.*;
+
+public class IntervalGraph {
+  
+  public final int intervals = 500000;
+  public final int width = 1/intervals;
+  
+}

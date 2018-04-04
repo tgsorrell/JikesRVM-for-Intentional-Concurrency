@@ -3,8 +3,7 @@ import java.util.*;
 
 public class AssemblerTest{
   
-  private String name;
-  private int concurrent;
+  public String name;
   
   public AssemblerTest(){
     name = "Assembler Test";

@@ -928,7 +928,7 @@ public class RuntimeEntrypoints {
     {
        
        Thread current = Thread.currentThread();
-       int curID = (int) current.getId(); 
+       int curID = (int) current.getId();
        int permission = MiscHeader.getPermission(o);
        int ownerID = MiscHeader.getOwner(o);
        

@@ -1,0 +1,30 @@
+package Test_Program;
+
+
+import java.util.*;
+
+public class IntervalGraph {
+  
+  public int intervals = 500000000;
+  public double width = 1.0/intervals;
+  public int numThreads;
+  public int chunk;
+  public int split;
+  
+  /*
+   * Constructor for an interval graph
+   * @param threads: the number of threads being used
+   */
+  public IntervalGraph(int threads){
+    numThreads = threads;
+    chunk = intervals/threads;
+    split = intervals % threads;
+    if(split == 0)
+    {
+      split = numThreads;
+      chunk -= 1;
+    }
+      
+  }
+  
+}

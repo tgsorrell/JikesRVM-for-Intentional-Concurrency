@@ -256,7 +256,7 @@ ECHO_N = -n
 ECHO_T = 
 ECJ_JAR = 
 EGREP = /bin/grep -E
-ERROR_CFLAGS = -Werror
+ERROR_CFLAGS = 
 EXAMPLESDIR = examples
 EXEEXT = 
 EXTRA_CFLAGS = -fexceptions -fasynchronous-unwind-tables
@@ -443,7 +443,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/native/jni/classpath -I$(t
 # No STRICT_WARNING_CFLAGS here as we use dlsym to load the address of 
 # a function,and ISO C prohibits casting void pointers, like those returned
 # by dlsym, to function pointers.
-AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long -Werror -fexceptions -fasynchronous-unwind-tables
+AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long  -fexceptions -fasynchronous-unwind-tables
 all: all-am
 
 .SUFFIXES:

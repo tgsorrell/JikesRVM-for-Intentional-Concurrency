@@ -256,7 +256,7 @@ ECHO_N = -n
 ECHO_T = 
 ECJ_JAR = 
 EGREP = /bin/grep -E
-ERROR_CFLAGS = -Werror
+ERROR_CFLAGS = 
 EXAMPLESDIR = examples
 EXEEXT = 
 EXTRA_CFLAGS = -fexceptions -fasynchronous-unwind-tables
@@ -440,7 +440,7 @@ libgjsmalsa_la_LIBADD = -lasound
 libgjsmalsa_la_LDFLAGS = $(AM_LDFLAGS) -avoid-version
 AM_LDFLAGS = -module -version-info 0:0:0 -no-undefined
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/native/jni/classpath -I$(top_srcdir)/native/jni/native-lib `pkg-config --cflags-only-I alsa`
-AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long -Wstrict-prototypes -pedantic -Werror `pkg-config --cflags-only-other alsa` \
+AM_CFLAGS = -W -Wall -Wmissing-declarations -Wwrite-strings -Wmissing-prototypes -Wno-long-long -Wstrict-prototypes -pedantic  `pkg-config --cflags-only-other alsa` \
             -fexceptions -fasynchronous-unwind-tables
 
 all: all-am
