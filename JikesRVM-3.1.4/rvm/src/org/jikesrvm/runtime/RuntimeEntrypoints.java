@@ -936,6 +936,8 @@ public class RuntimeEntrypoints {
        switch(permission) {
          case 0: //Private
            if (curID != ownerID) {
+		athrow(new Exception(String.format("Intentional Concurrency: Invalid access private object class %s. (Owner: %d, Accessor: %d)", o.getClass(), ownerID, curID)));
+		/*
            VM.sysWriteln("\n============CONCURRENCY ERROR============");
            VM.sysWriteln("Invalid access on private field");
            //TODO: We probably want some information about where the access is
@@ -943,20 +945,21 @@ public class RuntimeEntrypoints {
            VM.sysWriteln("Object that owns field: " + o.getClass());
            VM.sysWriteln("Current Thread ID: " + curID);
            VM.sysWriteln("Owning Thread ID: " + ownerID);
-           VM.sysWriteln("=========================================\n");
+           VM.sysWriteln("=========================================\n");*/
          }
            break;
          case 1: //Frozen
            //Read (1) -> Allow, Write (0) -> Deny
            if (read == 0) {
-           VM.sysWriteln("\n============CONCURRENCY ERROR============");
-           VM.sysWriteln("Invalid attempt to write to frozen field");
+	    	athrow(new Exception(String.format("Intentional Concurrency: Invalid write to frozen object class %s. (Owner: %d, Accessor: %d)", o.getClass(), ownerID, curID)));
+           //VM.sysWriteln("\n============CONCURRENCY ERROR============");
+           //VM.sysWriteln("Invalid attempt to write to frozen field");
            //TODO: We probably want some information about where the access is
-           VM.sysWriteln("Access in method x" + " of class y" ); //?
-           VM.sysWriteln("Object that owns field: " + o.getClass());
-           VM.sysWriteln("Current Thread ID: " + curID);
-           VM.sysWriteln("Owning Thread ID: " + ownerID);
-           VM.sysWriteln("=========================================\n");
+           //VM.sysWriteln("Access in method x" + " of class y" ); //?
+           //VM.sysWriteln("Object that owns field: " + o.getClass());
+           //VM.sysWriteln("Current Thread ID: " + curID);
+           //VM.sysWriteln("Owning Thread ID: " + ownerID);
+           //VM.sysWriteln("=========================================\n");
          }
            break;
          case 2: //Transfer
