@@ -123,7 +123,7 @@ public final class MiscHeader {
     if(VM.SafeForConcurrency)
       ref.store(permission, PERMISSION_OFFSET);
     else
-      ref.store(Word.fromIntSignExtend(1), PERMISSION_OFFSET);
+      ref.store(Word.fromIntSignExtend(5), PERMISSION_OFFSET);
     ref.store(owner, OWNER_OFFSET);
     
     /* Only perform initialization when it is required */
@@ -145,7 +145,11 @@ public final class MiscHeader {
   @Interruptible("Only called during boot image creation")
   public static void initializeHeader(BootImageInterface bootImage, Address ref, TIB tib, int size,
                                       boolean isScalar) {
-    //Does permission field also need to be initialized here?
+    
+    
+    //Intentional Concurrency
+    bootImage.setAddressWord(ref.plus(PERMISSION_OFFSET), Word.fromIntSignExtend(5), false, false);
+    bootImage.setAddressWord(ref.plus(OWNER_OFFSET), owner, false, false);
     
     /* Only perform initialization when it is required */
     if (GENERATE_GC_TRACE) {

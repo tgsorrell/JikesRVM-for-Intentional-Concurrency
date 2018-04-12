@@ -2459,16 +2459,23 @@ public final class BaselineCompilerImpl extends BaselineCompiler {
   private void insertThreadCheck(int read){
     
     String packageName = klass.toString();
-    if(VM.SafeForConcurrency){   
+    
+    if(VM.SafeForConcurrency){
       if(!(packageName.contains("java") ||
            packageName.contains("gnu") ||
            packageName.contains("jikesrvm")))
       {
+        //If it is a write operation the object reference is second thing on the stack
+        if(read == 0)
+          emit_swap();
         //Assumes an object reference is on the stack. This duplicates it.
         asm.emitPUSH_RegInd(SP);
         asm.emitPUSH_Imm(read);
         genParameterRegisterLoad(asm, 2);
         emit_unresolved_invokestatic(Entrypoints.threadCheck.getMemberRef().asMethodReference());
+        //Return the stack to normal after finished checking read
+        if(read == 0)
+          emit_swap();
         
       }
     }
